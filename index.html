@@ -1,1 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garreth — Builder</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
 
+  :root{
+    --bg: #12172B;
+    --bg-raised: #171d36;
+    --ink: #F1EFEA;
+    --muted: #8B96BB;
+    --amber: #FFB43B;
+    --teal: #4ECDC4;
+    --line: #2A3155;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+  ::selection{ background:var(--amber); color:var(--bg); }
+  .wrap{ max-width:920px; margin:0 auto; padding:0 24px; }
+
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(18,23,43,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; justify-content:space-between; align-items:center; padding:16px 24px; }
+  .logo{ font-family:var(--mono); font-weight:700; font-size:15px; }
+  .logo span{ color:var(--amber); }
+  nav ul{ display:flex; gap:28px; list-style:none; }
+  nav a{ text-decoration:none; font-size:14px; color:var(--muted); transition:color .2s; }
+  nav a:hover{ color:var(--ink); }
+
+  .hero{ padding:88px 0 64px; }
+  .prompt-bar{
+    font-family:var(--mono);
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 20px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:14px;
+    color:var(--teal);
+    max-width:520px;
+    margin-bottom:36px;
+  }
+  .prompt-bar .dot{ width:9px; height:9px; border-radius:50%; background:var(--amber); flex-shrink:0; }
+  .cursor{
+    display:inline-block; width:8px; height:16px; background:var(--amber);
+    animation: blink 1s steps(1) infinite; vertical-align:-3px; margin-left:2px;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  h1{
+    font-family:var(--mono);
+    font-size:clamp(32px, 5.5vw, 52px);
+    line-height:1.15;
+    font-weight:700;
+    letter-spacing:-0.5px;
+    margin-bottom:20px;
+  }
+  h1 .accent{ color:var(--amber); }
+
+  .hero p.lede{ font-size:18px; color:var(--muted); max-width:560px; margin-bottom:32px; }
+
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono);
+    font-size:14px;
+    padding:13px 22px;
+    border-radius:8px;
+    text-decoration:none;
+    display:inline-block;
+    transition:transform .15s ease, opacity .15s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--amber); color:var(--bg); font-weight:700; }
+  .btn-ghost{ border:1px solid var(--line); color:var(--ink); }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    margin-bottom:12px;
+  }
+
+  section{ padding:72px 0; border-top:1px solid var(--line); }
+  h2{ font-family:var(--mono); font-size:28px; margin-bottom:16px; }
+  .section-intro{ color:var(--muted); max-width:520px; margin-bottom:44px; }
+
+  .process{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .step{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:24px;
+  }
+  .step .num{ font-family:var(--mono); color:var(--amber); font-size:13px; margin-bottom:12px; }
+  .step h3{ font-size:16px; margin-bottom:8px; }
+  .step p{ font-size:14px; color:var(--muted); }
+
+  .projects{ display:flex; flex-direction:column; gap:20px; }
+  .project{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:28px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:20px;
+    align-items:start;
+    transition:border-color .2s;
+  }
+  .project:hover{ border-color:var(--teal); }
+  .project h3{ font-size:19px; margin-bottom:6px; }
+  .project .tag{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:10px;
+    display:block;
+  }
+  .project p{ color:var(--muted); font-size:14.5px; max-width:480px; }
+  .project .stack{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .stack span{
+    font-family:var(--mono); font-size:11px;
+    border:1px solid var(--line); border-radius:5px;
+    padding:4px 8px; color:var(--muted);
+  }
+  .project .link{
+    font-family:var(--mono); font-size:13px; color:var(--amber);
+    text-decoration:none; white-space:nowrap;
+  }
+
+  .about-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:start; }
+  .about-grid p{ color:var(--muted); margin-bottom:14px; font-size:15px; }
+  .fact-list{ list-style:none; }
+  .fact-list li{
+    font-family:var(--mono); font-size:13px;
+    padding:10px 0; border-bottom:1px solid var(--line);
+    display:flex; justify-content:space-between; color:var(--muted);
+  }
+  .fact-list li b{ color:var(--ink); font-weight:400; }
+
+  .contact-box{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:44px;
+    text-align:center;
+  }
+  .contact-box h2{ margin-bottom:10px; }
+  .contact-box p{ color:var(--muted); margin-bottom:28px; }
+  .contact-row{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+
+  footer{
+    padding:32px 0 48px;
+    text-align:center;
+    color:var(--muted);
+    font-family:var(--mono);
+    font-size:12px;
+  }
+
+  @media(max-width:700px){
+    .process{ grid-template-columns:1fr; }
+    .about-grid{ grid-template-columns:1fr; }
+    .project{ grid-template-columns:1fr; }
+    nav ul{ gap:16px; }
+    .prompt-bar{ font-size:12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .cursor{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  :focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">garreth<span>.dev</span></div>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="prompt-bar">
+      <span class="dot"></span>
+      <span>build me a working product, fast<span class="cursor"></span></span>
+    </div>
+    <h1>I turn prompts<br>into <span class="accent">shipped products.</span></h1>
+    <p class="lede">I build real, working apps and websites by pairing with AI tools — which means you get something live in days, not months, without cutting corners on quality.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#work">See the work</a>
+      <a class="btn btn-ghost" href="#contact">Start a project</a>
+    </div>
+  </div>
+</header>
+
+<section id="work">
+  <div class="wrap">
+    <div class="eyebrow">Selected work</div>
+    <h2>Things I've shipped</h2>
+    <p class="section-intro">A mix of client work and self-initiated builds — each one live and working, not just mockups.</p>
+
+    <div class="projects">
+      <div class="project">
+        <div>
+          <span class="tag">Hospitality Platform</span>
+          <h3>Expat's Nest Ltd</h3>
+          <p>A premium onboarding and hospitality platform that makes the transition of expats and diplomats into Nigeria seamless and hassle-free.</p>
+          <div class="stack"><span>Replit</span><span>React</span><span>PostgreSQL</span><span>Render</span></div>
+        </div>
+        <a class="link" href="https://expatsnests.com" target="_blank" rel="noopener">View live →</a>
+      </div>
+
+      <div class="project">
+        <div>
+          <span class="tag">Community Platform</span>
+          <h3>GSSJIWACLASS2012</h3>
+          <p>An alumni platform connecting old classmates, with a gallery, memory cards, admin login, and individual profiles.</p>
+          <div class="stack"><span>Replit</span><span>Supabase</span><span>Cloudinary</span><span>React</span></div>
+        </div>
+        <a class="link" href="https://gssjiwaclass2012.com" target="_blank" rel="noopener">View live →</a>
+      </div>
+
+      <div class="project">
+        <div>
+          <span class="tag">Portfolio Site</span>
+          <h3>Adewale Garreth Portfolio</h3>
+          <p>A premium portfolio site built to showcase dual work as a civil site engineer and web developer.</p>
+          <div class="stack"><span>React</span><span>Supabase</span><span>Cloudinary</span><span>Vercel</span></div>
+        </div>
+        <a class="link" href="https://portfolio-woad-six-24.vercel.app/" target="_blank" rel="noopener">View live →</a>
+      </div>
+
+      <div class="project">
+        <div>
+          <span class="tag">Web App</span>
+          <h3>Event Gallery Hub</h3>
+          <p>A tool for collecting event photos via a simple shareable link, keeping full image quality with minimal storage overhead.</p>
+          <div class="stack"><span>React</span><span>Cloudinary</span><span>Supabase</span><span>Vercel</span></div>
+        </div>
+        <a class="link" href="https://event-gallery-hub-api-server.vercel.app/" target="_blank" rel="noopener">View live →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2>From idea to live product</h2>
+    <p class="section-intro">A real sequence — this is the order things actually happen in, so it's numbered on purpose.</p>
+
+    <div class="process">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Scope it</h3>
+        <p>A short call or message to nail down exactly what you need and what "done" looks like.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Build fast</h3>
+        <p>I build and iterate quickly, often sharing a working version within the first day or two.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Ship & hand off</h3>
+        <p>You get a live, working product — plus everything you need to keep running it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">About</div>
+    <h2>Why work with me</h2>
+    <div class="about-grid">
+      <div>
+        <p>I build working platforms — hospitality systems, community platforms, portfolios, and media tools — by pairing hands-on development with AI tools to move fast without sacrificing quality.</p>
+        <p>I care about shipping things that actually work in production, not just prototypes: real databases, real media handling, real users.</p>
+      </div>
+      <ul class="fact-list">
+        <li>Based in <b>Abuja, Nigeria</b></li>
+        <li>Available <b>Full-time & Freelance</b></li>
+        <li>Turnaround <b>3–10 days</b></li>
+        <li>Tools <b>React, Supabase, Cloudinary, Vercel</b></li>
+        <li>GitHub <b>github.com/seangarreth</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2>Got something to build?</h2>
+      <p>Tell me what you're trying to make — I'll reply with next steps within a day.</p>
+      <div class="contact-row">
+        <a class="btn btn-primary" href="mailto:Adewalegarreth1@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/sunday-garreth-a34862217" target="_blank" rel="noopener">Message on LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/seangarreth" target="_blank" rel="noopener">View GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span> Garreth — built by talking to AI, shipped by hand.
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
