@@ -153,6 +153,8 @@
     font-family:var(--mono); font-size:13px; color:var(--amber);
     text-decoration:none; white-space:nowrap;
   }
+  .case-line{ margin-bottom:10px; max-width:560px; }
+  .case-line b{ color:var(--teal); font-weight:600; }
 
   .about-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:start; }
   .about-grid p{ color:var(--muted); margin-bottom:14px; font-size:15px; }
@@ -175,6 +177,17 @@
   .contact-box p{ color:var(--muted); margin-bottom:28px; }
   .contact-row{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
 
+  .testimonials{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .testimonial{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:24px;
+  }
+  .testimonial .quote{ font-size:15px; color:var(--ink); margin-bottom:14px; }
+  .testimonial .quote.placeholder{ color:var(--muted); font-style:italic; }
+  .testimonial .who{ font-family:var(--mono); font-size:12px; color:var(--teal); }
+
   footer{
     padding:32px 0 48px;
     text-align:center;
@@ -187,6 +200,7 @@
     .process{ grid-template-columns:1fr; }
     .about-grid{ grid-template-columns:1fr; }
     .project{ grid-template-columns:1fr; }
+    .testimonials{ grid-template-columns:1fr; }
     nav ul{ gap:16px; }
     .prompt-bar{ font-size:12px; }
   }
@@ -235,11 +249,13 @@
     <p class="section-intro">A mix of client work and self-initiated builds — each one live and working, not just mockups.</p>
 
     <div class="projects">
-      <div class="project">
+      <div class="project case-study">
         <div>
-          <span class="tag">Hospitality Platform</span>
+          <span class="tag">Hospitality Platform — Case Study</span>
           <h3>Expat's Nest Ltd</h3>
-          <p>A premium onboarding and hospitality platform that makes the transition of expats and diplomats into Nigeria seamless and hassle-free.</p>
+          <p class="case-line"><b>Problem:</b> Expats and diplomats relocating to Nigeria faced a fragmented, manual onboarding process — scattered communication, no central place to track housing, paperwork, or local logistics.</p>
+          <p class="case-line"><b>Approach:</b> I designed and built a guided onboarding platform with a structured client flow, a PostgreSQL backend to track each client's progress, and a clean interface the Expat's Nest team could manage without technical help.</p>
+          <p class="case-line"><b>Result:</b> Expat's Nest now runs client onboarding through a single live platform instead of ad-hoc messages and spreadsheets — visible and usable today at the link below.</p>
           <div class="stack"><span>Replit</span><span>React</span><span>PostgreSQL</span><span>Render</span></div>
         </div>
         <a class="link" href="https://expatsnests.com" target="_blank" rel="noopener">View live →</a>
@@ -320,6 +336,25 @@
         <li>Tools <b>React, Supabase, Cloudinary, Vercel</b></li>
         <li>GitHub <b>github.com/seangarreth</b></li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="eyebrow">What people say</div>
+    <h2>Testimonials</h2>
+    <p class="section-intro">Feedback from people I've built for.</p>
+
+    <div class="testimonials">
+      <div class="testimonial">
+        <p class="quote">"Working with you was a pleasure — clear communication, strong execution, and results that consistently exceeded expectations."</p>
+        <p class="who">— Williams, Expat's Nest Ltd</p>
+      </div>
+      <div class="testimonial">
+        <p class="quote">"Working with you was a smooth and productive experience; you delivered clear results on time and made the collaboration straightforward."</p>
+        <p class="who">— Mathew, GSSJIWACLASS2012</p>
+      </div>
     </div>
   </div>
 </section>
